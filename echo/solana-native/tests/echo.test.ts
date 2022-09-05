@@ -43,7 +43,7 @@ function parseMessage(logMessages: string[], publicKey: PublicKey): string {
         if (logLine.startsWith("Program log:")) {
             const userLog = logLine.slice("Program log: ".length);
             const walletPublicKey = publicKey.toBase58();
-            if (userLog.startsWith(`"${walletPublicKey}"`)) {
+            if (userLog.startsWith(walletPublicKey)) {
                 const parts = userLog.split(": ");
                 return parts[1];
             }
@@ -60,7 +60,7 @@ describe("Echo Solana Native", () => {
     // Create a paper wallet (aka keypair), and send a transaction instruction
     // to our program. We test that the string we send as instruction data
     // can be retrieved from the log messages of the confirmed transaction.
-    it("Test", async () => {
+    it("Test our echo", async () => {
         // Create the paper wallet, and airdrop 1 SOL (does not work on mainnet-beta)
         const keypair = Keypair.generate();
         await connection.requestAirdrop(keypair.publicKey, LAMPORTS_PER_SOL);

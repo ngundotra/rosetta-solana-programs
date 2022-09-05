@@ -28,13 +28,9 @@ pub fn process_instruction(
     let signer = next_account_info(account_info_iter)?;
 
     // Log the pubkey that signed this instruction and message
-    // It will have format
-    // "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS": Hello world
-    msg!(
-        "{:?}: {}",
-        signer.key.to_string(),
-        std::str::from_utf8(&instruction_data).unwrap()
-    );
+    // It will have format like:
+    // Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS: Hello world
+    msg!("{}", format!("{:?}: {}", signer.key, message));
     Ok(())
 }
 
