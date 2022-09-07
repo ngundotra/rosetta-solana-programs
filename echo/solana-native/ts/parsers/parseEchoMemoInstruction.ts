@@ -6,7 +6,10 @@ import {
 import { PROGRAM_ID, SPL_MEMO_PROGRAM_ID } from '../index';
 import * as bs58 from 'bs58';
 
-export function parseEchoMemoInstruction(txInfo: VersionedTransactionResponse, publicKey: PublicKey): string {
+export function parseEchoMemoInstruction(txInfo: VersionedTransactionResponse, publicKey: PublicKey): {
+    message: string,
+    signers: PublicKey[]
+} {
     const accountKeys = txInfo.transaction.message.staticAccountKeys;
     const getDecompiledPublicKey = (index: number): PublicKey => accountKeys[index];
     const topLevelIxs = txInfo.transaction.message.compiledInstructions;
@@ -23,7 +26,7 @@ export function parseEchoMemoInstruction(txInfo: VersionedTransactionResponse, p
                 // Decode the instruction data sent to the program
                 const innerIxData = bs58.decode(innerIx.data);
                 const decoder = new TextDecoder('utf-8');
-                return decoder.decode(innerIxData)
+                return { message: decoder.decode(innerIxData), signers: innerIx.accounts.map((accountIndex) => getDecompiledPublicKey(accountIndex)) }
             }
         }
     }
