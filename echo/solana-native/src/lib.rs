@@ -77,24 +77,8 @@ pub fn process_echo_memo(
     let signer = next_account_info(account_info_iter)?;
 
     // Log the pubkey that signed this instruction and message
-    // It will have format like:
-    // Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS: Hello world
-
+    // by invoking the spl-memo program
     let memo_instruction = build_memo(instruction_data, &[&signer.key]);
     invoke(&memo_instruction, &[signer.clone()])?;
     Ok(())
-}
-
-/// ----------------------------------------------
-/// This is function does *not* perform any on-chain logic
-/// ----------------------------------------------
-///
-/// This function provides a way for other Rust libraries
-/// to create a TransactionInstruction for this program (exposes an SDK)
-pub fn wrap_instruction(data: Vec<u8>) -> Instruction {
-    Instruction {
-        program_id: crate::id(),
-        accounts: vec![],
-        data,
-    }
 }
