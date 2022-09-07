@@ -7,7 +7,7 @@
   "license": "Apache-2.0",
   "private": false,
   "scripts": {
-    "start-validator": "solana-test-validator --reset --quiet --bpf-program Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS ./target/deploy/echo_solana_native.so",
+    "start-validator": "solana-test-validator --reset --quiet --bpf-program Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS ./target/deploy/echo_solana_native.so --bpf-program MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr ../../../../solana-program-library/target/deploy/spl_memo.so",
     "run-tests": "jest tests --detectOpenHandles",
     "test": "start-server-and-test start-validator http://localhost:8899/health run-tests"
   },

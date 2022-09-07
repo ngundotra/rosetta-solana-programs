@@ -365,6 +365,7 @@ name = "echo-solana-native"
 version = "0.1.0"
 dependencies = [
  "solana-program",
+ "spl-memo",
 ]
 
 [[package]]
@@ -1050,6 +1051,13 @@ dependencies = [
  "quote",
  "rustversion",
  "syn",
+]
+
+[[package]]
+name = "spl-memo"
+version = "3.0.1"
+dependencies = [
+ "solana-program",
 ]
 
 [[package]]

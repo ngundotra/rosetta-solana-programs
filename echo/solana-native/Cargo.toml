@@ -17,3 +17,4 @@ default = []
 
 [dependencies]
 solana-program = "1.10.38"
+spl-memo = { path = "../../../../solana-program-library/memo/program", features = ['no-entrypoint']}
