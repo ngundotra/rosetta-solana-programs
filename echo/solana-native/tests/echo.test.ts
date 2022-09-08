@@ -32,18 +32,14 @@ describe("Echo Solana Native", () => {
         // We want this to be logged by the Solana runtime
         const message = "Hello World";
 
-        // Create a TransactionInstruction to interact with our echo program
         const ix: TransactionInstruction = createEchoLogInstruction({ signer: keypair }, { message });
-
-        // Put the instruction into a Transaction
         let tx = new Transaction().add(ix);
 
-        // Explicitly set the feePayer to be the signer
         tx.feePayer = keypair.publicKey;
         tx.recentBlockhash = (await connection.getLatestBlockhash('confirmed')).blockhash;
 
-        // Send transaction to network (local network)
         const txId = await sendAndConfirmTransaction(connection, tx, [keypair], { skipPreflight: true, commitment: 'confirmed' });
+
         // Retrieve transaction details
         const txInfo = await connection.getTransaction(txId, {
             commitment: 'confirmed',
