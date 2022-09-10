@@ -5,6 +5,7 @@ import {
   PublicKey,
   SystemProgram
 } from '@solana/web3.js';
+import { assert } from "chai";
 import { CounterSeahorse } from "../target/types/counter_seahorse";
 
 describe("counter_seahorse", () => {
@@ -13,20 +14,30 @@ describe("counter_seahorse", () => {
 
   const program = anchor.workspace.CounterSeahorse as Program<CounterSeahorse>;
 
-  it("Is initialized!", async () => {
-    // Add your test here.
-
+  it("Increment counter", async () => {
+    const seed = 69;
     const counter = PublicKey.findProgramAddressSync(
-      [program.provider.publicKey!.toBuffer()],
+      [Buffer.from([0x45])],
       program.programId
     )[0];
 
-    const tx = await program.methods
+    // Initialize counter
+    await program.methods
+      .initializeCounter(seed)
+      .accounts({
+        payer: program.provider.publicKey,
+      })
+      .rpc();
+
+    // Increment counter
+    await program.methods
       .increment()
       .accounts({
         counter
       })
       .rpc();
-    console.log("Your transaction signature", tx);
+
+    const count = (await program.account.counter.fetch(counter)).count.toNumber();
+    assert(count === 1, "Expected count to be 1");
   });
 });

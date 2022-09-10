@@ -11,9 +11,13 @@ class Counter(Account):
 
 
 @instruction
-def increment(counter: Empty[Counter], owner: Signer):
+def initialize_counter(counter: Empty[Counter], payer: Signer, seed: u8):
     counter.init(
-        payer=owner,
-        seeds=[owner]
+        payer=payer,
+        seeds=[seed]
     )
+
+
+@instruction
+def increment(counter: Counter):
     counter.count += 1
