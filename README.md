@@ -1,4 +1,4 @@
-# Rosetta Solana Programs
+# Rosetta Solana Programs (Moving to [solana-developers/program-examples](https://github.com/solana-developers/program-examples))
 
 Repo of some example programs written using different Solana frameworks.
 
